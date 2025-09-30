@@ -9,8 +9,17 @@ import ScienceNotes from './components/ScienceNotes';
 import MathsNotes from './components/MathsNotes';
 import Blog from './components/Blog';
 import Meetingpage from './components/Meetingpage';
+import ConsentManager from './components/ConsentManager';
 
 function App() {
+  const [hasConsent, setHasConsent] = React.useState<boolean>(false);
+
+  const handleConsentChange = (consent: boolean) => {
+    setHasConsent(consent);
+    // Store consent status in localStorage
+    localStorage.setItem('adConsent', consent.toString());
+  };
+
   return (
     <Router>
       <div className="min-h-screen bg-gray-50">
@@ -27,6 +36,12 @@ function App() {
             <Route path="/meetings" element={<Meetingpage />} />
           </Routes>
         </main>
+
+        {/* Google Consent Management Platform */}
+        <ConsentManager
+          publisherId="7916158347459501"
+          onConsentChange={handleConsentChange}
+        />
       </div>
     </Router>
   );
